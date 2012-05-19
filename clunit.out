@@ -1,0 +1,10 @@
+Sat May 19 12:32:23 2012
+
+not ok: ! _CrtMemDifference( &s3, &s1, &s2 ) (149)
+    ok: _CrtCheckMemory() != 0
+TODOs (3):
+------------------------
+- Master line counting [c:\home\pete\sw\clunit\test\clunit-test.cpp:41]
+- 1 == 0 (failing) [c:\home\pete\sw\clunit\test\clunit-test.cpp:42]
+- Another test [c:\home\pete\sw\clunit\test\clunit-test.cpp:43]
+1 error(s) of 2 test(s)
