@@ -82,130 +82,189 @@ public:
 	}
 	const std::string & get() const { return log; }
 	size_t size() const { return n_items_logged; }
+	bool empty() const { return  n_items_logged == 0; }
 };
 
-#define TINIT( x ) cl::clunit::tout() << "\n\n    " << x << " (" << __FILE__ << ")\n    ==========================\n"; OutputDebugString( x "\n" )
-#define TDOC( x ) cl::clunit::tout() << "      " << x << "\n"
-#define TTODO( x ) cl::clunit::add_todo( x, __FILE__, __LINE__ )
-#define TTODOX( x ) { bool t=(x); cl::clunit::add_todo( (std::string( #x ) + ((t)?" (passing)":" (failing)")).c_str(), __FILE__, __LINE__ ); }
-#define TSETUP( x ) cl::clunit::tout() << "      : " << #x << '\n'; x
-#define TTEST( x ) { bool t=(x); if( !(t) ) {cl::clunit::tout() << "not "; ++cl::clunit::errors;}else{cl::clunit::tout()<<"    ";} ++cl::clunit::tests; cl::clunit::tout() << "ok: " << #x; if( !(t) ) cl::clunit::tout() << " (" << __LINE__ << ")"; cl::clunit::tout() << "\n"; }
-#define TRUNALL() { cl::clunit::run(); cl::clunit::report(); if( cl::clunit::errors > 255 ) return 255; return cl::clunit::errors; }
+#define TINIT( x ) cl::clunit::tinit( x, __FILE__ )
+#define TDOC( x ) cl::clunit::tdoc( x )
+#define TSETUP( x ) cl::clunit::tsetup_log( #x ); x
+#define TTODO( x ) cl::clunit::ttodo( x, __FILE__, __LINE__ )
+#define TTODOX( x ) { bool t=(x); cl::clunit::ttodox( #x, t, __FILE__, __LINE__ ); }
+#define TTEST( x ) { bool t=(x); cl::clunit::ttest( #x, t, __FILE__, __LINE__ ); }
+#define TRUNALL() { cl::clunit::run(); size_t n_errors = cl::clunit::report(); if( n_errors > 255 ) return 255; return n_errors; }
+
+typedef void(*job_func_ptr)();
+typedef std::vector< job_func_ptr > job_list;
 
 class clunit
 {
+private:
+	class singleton
+	{
+	private:
+		bool is_first;
+		int n_tests;
+		int n_errors;
+		fixed_size_log todo_log;
+
+		job_list & get_jobs();
+		std::ostream & tout();
+	
+	public:
+		singleton()
+			:
+			is_first( false ),
+			n_tests( 0 ),
+			n_errors( 0 ),
+			todo_log( 10000 )
+		{}
+
+		void add_job( job_func_ptr job )  { get_jobs().push_back( job ); }
+		void tinit( const char * what, const char * file )
+		{
+			tout() << "\n\n    " << what << " (" << file << ")\n    ==========================\n";
+			OutputDebugString( (std::string( what ) + "\n").c_str() );
+		}
+		void tdoc( const char * what )
+		{
+			tout() << "      " << what << "\n";
+		}
+		void tsetup_log( const char * what )
+		{
+			tout() << "      : " << what << '\n';
+		}
+		void ttodo( const char * what, const char * file, int line )
+		{
+			std::ostringstream report;
+			report << "- " << what << " [" << file << ":" << line << "]\n";
+			todo_log.insert( report.str() );
+		}
+		void ttodox( const char * what, bool is_passed, const char * file, int line )
+		{
+			std::ostringstream report;
+			report << "- " << what << ((is_passed)?" (passing)":" (failing)") << " [" << file << ":" << line << "]\n";
+			todo_log.insert( report.str() );
+		}
+		void ttest( const char * what, bool is_passed, const char * file, int line )
+		{
+			if( ! is_passed )
+			{
+				tout() << "not ";
+				++n_errors;
+			}
+			else
+			{
+				tout() << "    ";
+			} 
+			++n_tests;
+			tout() << "ok: " << what;
+			if( ! is_passed ) 
+				tout() << " (" << __LINE__ << ")";
+			tout() << "\n";
+		}
+		void run()
+		{
+			{
+			// The iostream (and possibly string) functions dynamically allocate memory
+			// -the first time they are called.  They are not cleared until the program
+			// -ends.  So that these allocations do not muck up the heap checking stats,
+			// -dummy uses of the libraries are made so that they are initialised.  We
+			// -can then checkpoint the heap after this point.
+			std::ostrstream t1;
+			t1 << "" << 12;
+			std::ostringstream t2;
+			t2 << "" << 12;
+			tout() << "";
+			}
+
+			job_list::iterator task( get_jobs().begin() );
+			while( task != get_jobs().end() )
+			{ 
+				_CrtMemState s1, s2, s3;
+				// Store a memory checkpoint in the s1 memory-state structure
+				_CrtMemCheckpoint( &s1 );
+
+				try
+				{
+					(*task)(); 
+				}
+				catch(...)
+				{
+					TTEST( "Unhandled exception" == NULL );		// Force fail case
+				}
+				
+				++task;
+
+				// Store a 2nd memory checkpoint in s2
+				_CrtMemCheckpoint( &s2 );
+				TTEST( ! _CrtMemDifference( &s3, &s1, &s2 ) );
+				if ( _CrtMemDifference( &s3, &s1, &s2 ) )
+				{
+					_CrtMemDumpStatistics( &s3 );
+					_CrtMemDumpAllObjectsSince( &s1 );
+				}
+			}
+
+			TTEST( _CrtCheckMemory() != 0 );
+		}
+		size_t report()
+		{
+			if( ! todo_log.empty() )
+			{
+				std::ostringstream todo_report;
+				todo_report << "TODOs (" << todo_log.size() << "):\n------------------------\n" << todo_log.get();
+				tout() << todo_report.str();
+				OutputDebugString( todo_report.str().c_str() );
+			}
+			std::ostringstream summary;
+			summary << n_errors << " error(s), " << todo_log.size() << " todo(s) after " << n_tests << " test(s)\n";
+			tout() << summary.str();
+			std::cout << summary.str();
+			OutputDebugString( summary.str().c_str() );
+			return n_errors;
+		}	
+		void clear() { get_jobs().clear(); }
+	};
+	
+	static singleton my_singleton;
 public:
-	typedef void(*job_func_ptr)() ;
-	typedef std::vector< job_func_ptr > job_list;
-	typedef std::vector< std::string > todo_list;
 
 private:
-	static bool first;
-	static job_list & get_jobs();
-	static todo_list & get_todos();
 
 public:
-	static int tests;
-	static int errors;
-	clunit( job_func_ptr job ) { get_jobs().push_back( job ); }
-	static void add_todo( const char * todo, const char * file, int line );
-	static void run();
-	static std::ostream & tout();
-	static void report();
-	static void clear() { get_jobs().clear(); get_todos().clear(); }
+	clunit( job_func_ptr job ) { my_singleton.add_job( job ); }
+	static void tinit( const char * what, const char * file ) { my_singleton.tinit( what, file ); }
+	static void tdoc( const char * what ) { my_singleton.tdoc( what ); }
+	static void tsetup_log( const char * what ) { my_singleton.tsetup_log( what ); }
+	static void ttodo( const char * what, const char * file, int line ) { my_singleton.ttodo( what, file, line ); }
+	static void ttodox( const char * what, bool is_passed, const char * file, int line ) { my_singleton.ttodox( what, is_passed, file, line ); }
+	static void ttest( const char * what, bool is_passed, const char * file, int line ) { my_singleton.ttest( what, is_passed, file, line ); }
+	static void run() { my_singleton.run(); }
+	static size_t report() { return my_singleton.report(); }
+	static void clear() { my_singleton.clear(); }
 };
 
 #ifdef CLUNIT_HOME
-	bool clunit::first = true;
-	int clunit::tests = 0;
-	int clunit::errors = 0;
-	clunit::job_list & clunit::get_jobs()
+	clunit::singleton clunit::my_singleton;
+	job_list & clunit::singleton::get_jobs()
 	{
 		static job_list jobs;
 		return jobs;
 	}
-	clunit::todo_list & clunit::get_todos()
-	{
-		static todo_list todos;
-		return todos;
-	}
-	std::ostream & clunit::tout()
+	std::ostream & clunit::singleton::tout()
 	{
 #ifdef CLUNIT_OUT
 		static std::ofstream o_tout( CLUNIT_OUT );
 #else
 		static std::ofstream o_tout( "clunit.out" );
 #endif
-		if( first ) { time_t t=time(NULL); o_tout << ctime(&t) << '\n'; first = false; }
+		if( is_first )
+		{
+			time_t t=time(NULL);
+			o_tout << ctime(&t) << '\n';
+			is_first = false;
+		}
 		return o_tout;
-	}
-	void clunit::add_todo( const char * todo, const char * file, int line )
-	{
-		std::ostringstream report;
-		report << todo << " [" << file << ":" << line << "]";
-		get_todos().push_back( report.str() );
-	}
-	void clunit::run()
-	{
-		{
-		// The iostream (and possibly string) functions dynamically allocate memory
-		// -the first time they are called.  They are not cleared until the program
-		// -ends.  So that these allocations do not muck up the heap checking stats,
-		// -dummy uses of the libraries are made so that they are initialised.  We
-		// -can then checkpoint the heap after this point.
-		std::ostrstream t1;
-		t1 << "" << 12;
-		std::ostringstream t2;
-		t2 << "" << 12;
-		tout() << "";
-		}
-
-		job_list::iterator task( get_jobs().begin() );
-		while( task != get_jobs().end() )
-		{ 
-			_CrtMemState s1, s2, s3;
-			// Store a memory checkpoint in the s1 memory-state structure
-			_CrtMemCheckpoint( &s1 );
-
-			try
-			{
-				(*task)(); 
-			}
-			catch(...)
-			{
-				TTEST( "Unhandled exception" == NULL );		// Force fail case
-			}
-			
-			++task;
-
-			// Store a 2nd memory checkpoint in s2
-			_CrtMemCheckpoint( &s2 );
-			TTEST( ! _CrtMemDifference( &s3, &s1, &s2 ) );
-			if ( _CrtMemDifference( &s3, &s1, &s2 ) )
-			{
-				_CrtMemDumpStatistics( &s3 );
-				_CrtMemDumpAllObjectsSince( &s1 );
-			}
-		}
-
-		TTEST( _CrtCheckMemory() != 0 );
-	}
-	void clunit::report()
-	{
-		if( ! get_todos().empty() )
-		{
-			tout() << "TODOs (" << get_todos().size() << "):\n------------------------\n";
-			OutputDebugString( "TODOs:\n------------------------\n" );
-			for( todo_list::const_iterator i( get_todos().begin() ), i_end( get_todos().end() );
-					i != i_end;
-					++i )
-			{
-				tout() << "- " << (*i) << "\n";
-				OutputDebugString( (std::string( "- ") + *i + "\n").c_str() );
-			}
-		}
-		tout() << errors << " error(s) of " << tests << " test(s)\n";
-		std::cout << errors << " error(s) of " << tests << " test(s)\n";
 	}
 #endif
 

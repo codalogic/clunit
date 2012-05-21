@@ -42,6 +42,7 @@ void fixed_size_log_test()
 
 	cl::fixed_size_log log( 35 );
 	TTEST( log.size() == 0 );
+	TTEST( log.empty() );
 	
 	#define SIXTEEN_CHAR_STRING "A 16 byte entry\n"
 	#define EIGHT_CHAR_STRING "8 bytes\n"
@@ -49,6 +50,7 @@ void fixed_size_log_test()
 	
 	log.insert( SIXTEEN_CHAR_STRING );
 	TTEST( log.size() == 1 );
+	TTEST( ! log.empty() );
 	TTEST( log.get() == SIXTEEN_CHAR_STRING );
 	
 	log.insert( EIGHT_CHAR_STRING );
@@ -69,14 +71,14 @@ void fixed_size_log_test()
 
 static cl::clunit t1(fixed_size_log_test);
 
-void basic_test()
+void todo_test()
 {
-	//TTODO( "Master line counting" );
-	//TTODOX( 1 == 0 );
-	//TTODO( "Another test" );
+	TTODO( "Master line counting" );
+	TTODOX( 1 == 0 );
+	TTODO( "Another test" );
 }
 
-static cl::clunit t2(basic_test);
+static cl::clunit t2(todo_test);
 
 int main( int argc, char * argv[] )
 {

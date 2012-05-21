@@ -1,11 +1,11 @@
-Mon May 21 10:23:39 2012
-
 
 
     fixed size log tests (c:\home\pete\sw\clunit\test\clunit-test.cpp)
     ==========================
     ok: log.size() == 0
+    ok: log.empty()
     ok: log.size() == 1
+    ok: ! log.empty()
     ok: log.get() == SIXTEEN_CHAR_STRING
     ok: log.size() == 2
     ok: log.get() == SIXTEEN_CHAR_STRING EIGHT_CHAR_STRING
@@ -16,4 +16,9 @@ Mon May 21 10:23:39 2012
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
     ok: _CrtCheckMemory() != 0
-0 error(s) of 12 test(s)
+TODOs (3):
+------------------------
+- Master line counting [c:\home\pete\sw\clunit\test\clunit-test.cpp:76]
+- 1 == 0 (failing) [c:\home\pete\sw\clunit\test\clunit-test.cpp:77]
+- Another test [c:\home\pete\sw\clunit\test\clunit-test.cpp:78]
+0 error(s), 3 todo(s) after 14 test(s)
