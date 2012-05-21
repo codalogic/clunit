@@ -38,7 +38,7 @@
 
 void fixed_size_log_test()
 {
-	TINIT( "fixed size log tests" );
+	TINIT( "Fixed size log tests" );
 
 	cl::fixed_size_log log( 35 );
 	TTEST( log.size() == 0 );

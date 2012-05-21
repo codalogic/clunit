@@ -227,9 +227,6 @@ private:
 	};
 	
 	static singleton my_singleton;
-public:
-
-private:
 
 public:
 	clunit( job_func_ptr job ) { my_singleton.add_job( job ); }
@@ -290,7 +287,6 @@ public:
 		TTEST( 1 != 0 );				// Run tests
 		TTEST( 2 == 2 );
 		TTEST( (1 == 0) == false );
-		return 0;						// Must return something!
 	}
 
 	static cl::clunit t1( basic_test );	// Ensure basic_test is registered for calling

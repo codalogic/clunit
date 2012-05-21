@@ -1,6 +1,6 @@
 
 
-    fixed size log tests (c:\home\pete\sw\clunit\test\clunit-test.cpp)
+    Fixed size log tests (c:\home\pete\sw\clunit\test\clunit-test.cpp)
     ==========================
     ok: log.size() == 0
     ok: log.empty()
