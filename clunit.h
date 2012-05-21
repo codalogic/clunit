@@ -119,7 +119,10 @@ private:
 			todo_log( 10000 )
 		{}
 
-		void add_job( job_func_ptr job )  { get_jobs().push_back( job ); }
+		void add_job( job_func_ptr job )
+		{
+			get_jobs().push_back( job );
+		}
 		void tbegin( const char * what, const char * file )
 		{
 			tout() << "\n\n    " << what << " (" << file << ")\n    ==========================\n";
@@ -177,8 +180,9 @@ private:
 			tout() << "";
 			}
 
-			job_list::iterator task( get_jobs().begin() );
-			while( task != get_jobs().end() )
+			for( job_list::const_iterator task( get_jobs().begin() ), task_end( get_jobs().end() );
+					task != task_end;
+					++task )
 			{ 
 				_CrtMemState s1, s2, s3;
 				// Store a memory checkpoint in the s1 memory-state structure
@@ -192,8 +196,6 @@ private:
 				{
 					TTEST( "Unhandled exception" == NULL );		// Force fail case
 				}
-				
-				++task;
 
 				// Store a 2nd memory checkpoint in s2
 				_CrtMemCheckpoint( &s2 );
