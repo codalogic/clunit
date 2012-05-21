@@ -85,7 +85,7 @@ public:
 	bool empty() const { return  n_items_logged == 0; }
 };
 
-#define TINIT( x ) cl::clunit::tinit( x, __FILE__ )
+#define TBEGIN( x ) cl::clunit::tbegin( x, __FILE__ )
 #define TDOC( x ) cl::clunit::tdoc( x )
 #define TSETUP( x ) cl::clunit::tsetup_log( #x ); x
 #define TTODO( x ) cl::clunit::ttodo( x, __FILE__, __LINE__ )
@@ -120,7 +120,7 @@ private:
 		{}
 
 		void add_job( job_func_ptr job )  { get_jobs().push_back( job ); }
-		void tinit( const char * what, const char * file )
+		void tbegin( const char * what, const char * file )
 		{
 			tout() << "\n\n    " << what << " (" << file << ")\n    ==========================\n";
 			OutputDebugString( (std::string( what ) + "\n").c_str() );
@@ -230,7 +230,7 @@ private:
 
 public:
 	clunit( job_func_ptr job ) { my_singleton.add_job( job ); }
-	static void tinit( const char * what, const char * file ) { my_singleton.tinit( what, file ); }
+	static void tbegin( const char * what, const char * file ) { my_singleton.tbegin( what, file ); }
 	static void tdoc( const char * what ) { my_singleton.tdoc( what ); }
 	static void tsetup_log( const char * what ) { my_singleton.tsetup_log( what ); }
 	static void ttodo( const char * what, const char * file, int line ) { my_singleton.ttodo( what, file, line ); }
@@ -279,8 +279,8 @@ public:
 
 	void basic_test()
 	{
-		TINIT();						// Setup testing for function
-		TDOC( Test tests );				// Do any documentation
+		TBEGIN( "Test set name" );		// Setup testing for function
+		TDOC( "Test description" );		// Do any documentation
 		TSETUP( strlen( "This\n" ) );	// Do any lines needed to setup a test
 		TTODO( "Need todo this" );		// Log any tests that need to be done
 		TTODOX( a == b );				// Log a todo that is compilable but not trying to pass yet
