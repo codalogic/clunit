@@ -36,14 +36,47 @@
 #define CLUNIT_HOME
 #include "clunit.h"
 
-void basic_test()
+void fixed_size_log_test()
 {
-	TTODO( "Master line counting" );
-	TTODOX( 1 == 0 );
-	TTODO( "Another test" );
+	TINIT( "fixed size log tests" );
+
+	cl::fixed_size_log log( 35 );
+	TTEST( log.size() == 0 );
+	
+	#define SIXTEEN_CHAR_STRING "A 16 byte entry\n"
+	#define EIGHT_CHAR_STRING "8 bytes\n"
+	#define HUGE_CHAR_STRING "This is a long char string intended to be too long to log in the fixed size log"
+	
+	log.insert( SIXTEEN_CHAR_STRING );
+	TTEST( log.size() == 1 );
+	TTEST( log.get() == SIXTEEN_CHAR_STRING );
+	
+	log.insert( EIGHT_CHAR_STRING );
+	TTEST( log.size() == 2 );
+	TTEST( log.get() == SIXTEEN_CHAR_STRING EIGHT_CHAR_STRING );
+	
+	// This will cause log to over fill and the string shouldn't be added
+	log.insert( HUGE_CHAR_STRING );
+	TTEST( log.size() == 3 );
+	TTEST( log.get() == SIXTEEN_CHAR_STRING EIGHT_CHAR_STRING );
+	
+	// This would fit in the space we've got left in the log, but because 
+	// the previous one didn't fit, this one shouldn't be looged either
+	log.insert( EIGHT_CHAR_STRING );
+	TTEST( log.size() == 4 );
+	TTEST( log.get() == SIXTEEN_CHAR_STRING EIGHT_CHAR_STRING );
 }
 
-static cl::clunit t1(basic_test);
+static cl::clunit t1(fixed_size_log_test);
+
+void basic_test()
+{
+	//TTODO( "Master line counting" );
+	//TTODOX( 1 == 0 );
+	//TTODO( "Another test" );
+}
+
+static cl::clunit t2(basic_test);
 
 int main( int argc, char * argv[] )
 {

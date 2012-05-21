@@ -45,10 +45,44 @@
 #include <ctime>
 #include <crtdbg.h>
 
-namespace cl {
-
 #define OutputDebugString  OutputDebugStringA
 extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA( const char * lpOutputString );
+
+namespace cl {
+
+class fixed_size_log
+{
+	// We want to log TODO operations while carrying out tests, but also
+	// check for memory leaks.  Therefore memory for logging can't be
+	// allocated during the testing process.  Therefore this class allocates
+	// a chunk of memory up front and we log into that until it is full.
+private:
+	std::string log;
+	size_t n_items_logged;
+	bool is_log_full;
+
+public:
+	fixed_size_log( size_t size )
+		:
+		n_items_logged( 0 ),
+		is_log_full( false )
+	{
+		log.reserve( size );
+	}
+	void insert( const std::string & new_entry )
+	{
+		++n_items_logged;
+		if( ! is_log_full )
+		{
+			if( log.size() + new_entry.size() < log.capacity() )
+				log += new_entry;
+			else
+				is_log_full = true;
+		}
+	}
+	const std::string & get() const { return log; }
+	size_t size() const { return n_items_logged; }
+};
 
 #define TINIT( x ) cl::clunit::tout() << "\n\n    " << x << " (" << __FILE__ << ")\n    ==========================\n"; OutputDebugString( x "\n" )
 #define TDOC( x ) cl::clunit::tout() << "      " << x << "\n"
