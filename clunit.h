@@ -172,7 +172,7 @@ private:
 	public:
 		singleton()
 			:
-			is_first( false ),
+			is_first( true ),
 			n_tests( 0 ),
 			n_errors( 0 ),
 			todo_log( 10000 )
@@ -186,9 +186,9 @@ private:
 		{
 			std::ostringstream documentation;
 			documentation << 
-					"\n\n    " << what << " [" << file << ":" << line << "]\n" <<
+					"    " << what << " [" << file << ":" << line << "]\n" <<
 					"    ==========================\n";
-			priint_to_all_outputs( documentation.str() );
+			print_to_all_outputs( documentation.str() );
 		}
 		void tdoc( const char * what )
 		{
@@ -254,6 +254,7 @@ private:
 
 				try
 				{
+					print_to_all_outputs( "\n\n" );	// Make sure there's at least a gap between different test function outputs
 					(*task)(); 
 				}
 				catch(...)
@@ -284,17 +285,17 @@ private:
 						"):\n------------------------\n" << 
 						todo_log.get() << 
 						"\n";
-				priint_to_all_outputs( todo_report.str() );
+				print_to_all_outputs( todo_report.str() );
 			}
 			std::ostringstream summary;
 			summary << 
 					n_errors << " error(s), " << 
 					todo_log.size() << " todo(s), " <<
 					n_tests << " test(s)\n";
-			priint_to_all_outputs( summary.str() );
+			print_to_all_outputs( summary.str() );
 			return n_errors;
 		}
-		void priint_to_all_outputs( const std::string & message )
+		void print_to_all_outputs( const std::string & message )
 		{
 			tout() << message;
 			std::cout << message;
@@ -329,17 +330,17 @@ public:
 	std::ostream & clunit::singleton::tout()
 	{
 #ifdef CLUNIT_OUT
-		static std::ofstream o_tout( CLUNIT_OUT );
+		static std::ofstream os( CLUNIT_OUT );
 #else
-		static std::ofstream o_tout( "clunit.out" );
+		static std::ofstream os( "clunit.out" );
 #endif
 		if( is_first )
 		{
 			time_t t=time(NULL);
-			o_tout << ctime(&t) << '\n';
+			os << "Tests run on " << ctime(&t);
 			is_first = false;
 		}
-		return o_tout;
+		return os;
 	}
 #endif
 
