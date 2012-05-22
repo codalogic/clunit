@@ -98,5 +98,12 @@ TREGISTER( todo_test );
 
 TFUNCTION( another_test )
 {
+	TBEGIN( "Another test" );
+	TTEST( 1==1 );
+}
+
+TFUNCTION( another_test2 )
+{
+	TBEGIN( "Another test 2" );
 	TTEST( 1==1 );
 }

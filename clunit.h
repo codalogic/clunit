@@ -67,6 +67,14 @@ example-test.cpp:
 
 	TREGISTER( example_test );			// Register example_test() for calling
 
+another-test.cpp:
+	#include "clunit.h"
+
+	TFUNCTION( another_test )			// A simpler way to both define and regsiter
+	{									// a test function called another_test()
+		...
+	}
+
 main-test.cpp:
 	#define CLUNIT_HOME
 	#include "clunit.h"
@@ -136,7 +144,7 @@ public:
 
 #define TFUNCTION( x ) void x(); TREGISTER( x ); void x()
 #define TREGISTER( x ) static cl::clunit x ## _registered_clunit_test( x );
-#define TBEGIN( x ) cl::clunit::tbegin( x, __FILE__ )
+#define TBEGIN( x ) cl::clunit::tbegin( x, __FILE__, __LINE__ )
 #define TDOC( x ) cl::clunit::tdoc( x )
 #define TSETUP( x ) cl::clunit::tsetup_log( #x ); x
 #define TTODO( x ) cl::clunit::ttodo( x, __FILE__, __LINE__ )
@@ -174,10 +182,13 @@ private:
 		{
 			get_jobs().push_back( job );
 		}
-		void tbegin( const char * what, const char * file )
+		void tbegin( const char * what, const char * file, int line )
 		{
-			tout() << "\n\n    " << what << " (" << file << ")\n    ==========================\n";
-			TVS_DEBUG_CONSOLE_OUT( std::string( what ) + "\n" );
+			std::ostringstream documentation;
+			documentation << 
+					"\n\n    " << what << " [" << file << ":" << line << "]\n" <<
+					"    ==========================\n";
+			priint_to_all_outputs( documentation.str() );
 		}
 		void tdoc( const char * what )
 		{
@@ -196,7 +207,9 @@ private:
 		void ttodox( const char * what, bool is_passed, const char * file, int line )
 		{
 			std::ostringstream report;
-			report << "- " << what << ((is_passed)?" (passing)":" (failing)") << " [" << file << ":" << line << "]\n";
+			report << "- " << 
+					what << ((is_passed)?" (passing)":" (failing)") << 
+					" [" << file << ":" << line << "]\n";
 			todo_log.insert( report.str() );
 		}
 		void ttest( const char * what, bool is_passed, const char * file, int line )
@@ -265,17 +278,28 @@ private:
 			if( ! todo_log.empty() )
 			{
 				std::ostringstream todo_report;
-				todo_report << "TODOs (" << todo_log.size() << "):\n------------------------\n" << todo_log.get();
-				tout() << todo_report.str();
-				TVS_DEBUG_CONSOLE_OUT( todo_report.str() );
+				todo_report <<
+						"\nTODOs (" << 
+						todo_log.size() << 
+						"):\n------------------------\n" << 
+						todo_log.get() << 
+						"\n";
+				priint_to_all_outputs( todo_report.str() );
 			}
 			std::ostringstream summary;
-			summary << n_errors << " error(s), " << todo_log.size() << " todo(s) after " << n_tests << " test(s)\n";
-			tout() << summary.str();
-			std::cout << summary.str();
-			TVS_DEBUG_CONSOLE_OUT( summary.str() );
+			summary << 
+					n_errors << " error(s), " << 
+					todo_log.size() << " todo(s), " <<
+					n_tests << " test(s)\n";
+			priint_to_all_outputs( summary.str() );
 			return n_errors;
-		}	
+		}
+		void priint_to_all_outputs( const std::string & message )
+		{
+			tout() << message;
+			std::cout << message;
+			TVS_DEBUG_CONSOLE_OUT( message );
+		}
 		void clear() { get_jobs().clear(); }
 	};
 	
@@ -284,7 +308,7 @@ private:
 public:
 	clunit( job_func_ptr job ) { tregister( job ); }
 	static void tregister( job_func_ptr job ) { my_singleton.tregister( job ); }
-	static void tbegin( const char * what, const char * file ) { my_singleton.tbegin( what, file ); }
+	static void tbegin( const char * what, const char * file, int line ) { my_singleton.tbegin( what, file, line ); }
 	static void tdoc( const char * what ) { my_singleton.tdoc( what ); }
 	static void tsetup_log( const char * what ) { my_singleton.tsetup_log( what ); }
 	static void ttodo( const char * what, const char * file, int line ) { my_singleton.ttodo( what, file, line ); }

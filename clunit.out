@@ -1,6 +1,6 @@
 
 
-    Example tests (c:\home\pete\sw\clunit\test\clunit-test.cpp)
+    Example tests [c:\home\pete\sw\clunit\test\clunit-test.cpp:40]
     ==========================
       Test description
       : int t=1
@@ -9,7 +9,7 @@
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
 
-    Fixed size log tests (c:\home\pete\sw\clunit\test\clunit-test.cpp)
+    Fixed size log tests [c:\home\pete\sw\clunit\test\clunit-test.cpp:55]
     ==========================
     ok: log.size() == 0
     ok: log.empty()
@@ -25,12 +25,23 @@
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
 
-    todo tests (c:\home\pete\sw\clunit\test\clunit-test.cpp)
+    todo tests [c:\home\pete\sw\clunit\test\clunit-test.cpp:90]
     ==========================
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+
+
+    Another test [c:\home\pete\sw\clunit\test\clunit-test.cpp:101]
+    ==========================
+    ok: 1==1
+    ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+
+
+    Another test 2 [c:\home\pete\sw\clunit\test\clunit-test.cpp:107]
+    ==========================
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
     ok: _CrtCheckMemory() != 0
+
 TODOs (5):
 ------------------------
 - Need todo this [c:\home\pete\sw\clunit\test\clunit-test.cpp:45]
@@ -38,4 +49,5 @@ TODOs (5):
 - Master line counting [c:\home\pete\sw\clunit\test\clunit-test.cpp:92]
 - 1 == 0 (failing) [c:\home\pete\sw\clunit\test\clunit-test.cpp:93]
 - Another test [c:\home\pete\sw\clunit\test\clunit-test.cpp:94]
-0 error(s), 5 todo(s) after 18 test(s)
+
+0 error(s), 5 todo(s), 20 test(s)
