@@ -90,8 +90,12 @@ main-test.cpp:
 #include <ctime>
 #include <crtdbg.h>
 
-#define OutputDebugString  OutputDebugStringA
-extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA( const char * lpOutputString );
+#ifdef _MSC_VER
+	extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA( const char * lpOutputString );
+	#define TVS_DEBUG_CONSOLE_OUT( x ) OutputDebugStringA( (x).c_str() )
+#else
+	#define TVS_DEBUG_CONSOLE_OUT( x )
+#endif
 
 namespace cl {
 
@@ -173,7 +177,7 @@ private:
 		void tbegin( const char * what, const char * file )
 		{
 			tout() << "\n\n    " << what << " (" << file << ")\n    ==========================\n";
-			OutputDebugString( (std::string( what ) + "\n").c_str() );
+			TVS_DEBUG_CONSOLE_OUT( std::string( what ) + "\n" );
 		}
 		void tdoc( const char * what )
 		{
@@ -263,13 +267,13 @@ private:
 				std::ostringstream todo_report;
 				todo_report << "TODOs (" << todo_log.size() << "):\n------------------------\n" << todo_log.get();
 				tout() << todo_report.str();
-				OutputDebugString( todo_report.str().c_str() );
+				TVS_DEBUG_CONSOLE_OUT( todo_report.str() );
 			}
 			std::ostringstream summary;
 			summary << n_errors << " error(s), " << todo_log.size() << " todo(s) after " << n_tests << " test(s)\n";
 			tout() << summary.str();
 			std::cout << summary.str();
-			OutputDebugString( summary.str().c_str() );
+			TVS_DEBUG_CONSOLE_OUT( summary.str() );
 			return n_errors;
 		}	
 		void clear() { get_jobs().clear(); }
