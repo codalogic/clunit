@@ -38,8 +38,8 @@
 // format to the example below.  To register the test function create a static
 // instance of cl::clunit with the test function as an argument. In main(), 
 // call the TRUNALL macro, which will run all the registered tests and
-// report the results.  The TFUNCTION macro allows starting a test function
-// and registering it at the same time. See clunit-test.cpp for an example.
+// report the results.  The TFUNCTION() macro allows starting a test function
+// and registering it at the same time. See example-test.cpp for an example.
 //
 // In the test file containing main(), do #define CLUNIT_HOME before 
 // #include "clunit.h"to ensure the key declarations are included.
@@ -142,7 +142,7 @@ public:
 	bool empty() const { return  n_items_logged == 0; }
 };
 
-#define TFUNCTION( x ) void x(); TREGISTER( x ); void x()
+#define TFUNCTION( x ) static void x(); TREGISTER( x ); void x()
 #define TREGISTER( x ) static cl::clunit x ## _registered_clunit_test( x );
 #define TBEGIN( x ) cl::clunit::tbegin( x, __FILE__, __LINE__ )
 #define TDOC( x ) cl::clunit::tdoc( x )

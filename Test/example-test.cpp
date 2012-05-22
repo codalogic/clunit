@@ -35,57 +35,29 @@
 
 #include "clunit.h"
 
-void fixed_size_log_tests()
+void example_test()
 {
-	TBEGIN( "Fixed size log tests" );
+	TBEGIN( "Example tests" );		// Document the beginning of a test function
 
-	cl::fixed_size_log log( 35 );
-	TTEST( log.size() == 0 );
-	TTEST( log.empty() );
-	
-	#define SIXTEEN_CHAR_STRING "A 16 byte entry\n"
-	#define EIGHT_CHAR_STRING "8 bytes\n"
-	#define HUGE_CHAR_STRING "This is a long char string intended to be too long to log in the fixed size log"
-	
-	log.insert( SIXTEEN_CHAR_STRING );
-	TTEST( log.size() == 1 );
-	TTEST( ! log.empty() );
-	TTEST( log.get() == SIXTEEN_CHAR_STRING );
-	
-	log.insert( EIGHT_CHAR_STRING );
-	TTEST( log.size() == 2 );
-	TTEST( log.get() == SIXTEEN_CHAR_STRING EIGHT_CHAR_STRING );
-	
-	// This will cause log to over fill and the string shouldn't be added
-	log.insert( HUGE_CHAR_STRING );
-	TTEST( log.size() == 3 );
-	TTEST( log.get() == SIXTEEN_CHAR_STRING EIGHT_CHAR_STRING );
-	
-	// This would fit in the space we've got left in the log, but because 
-	// the previous one didn't fit, this one shouldn't be looged either
-	log.insert( EIGHT_CHAR_STRING );
-	TTEST( log.size() == 4 );
-	TTEST( log.get() == SIXTEEN_CHAR_STRING EIGHT_CHAR_STRING );
+	TDOC( "Test description" );		// Add any documentation (anywhere in function)
+	TSETUP( int t=1 );				// Do any lines needed to setup a test
+	int b=1;						// Use of TSETUP for test setup is optional
+	TTODO( "Need todo this" );		// Log any tests that need to be done
+	TTODOX( t == b );				// Log a todo that is compilable but not trying to pass yet
+	TDOC( "More description" );
+	TTEST( 1 != 0 );				// Run a test
 }
 
-TREGISTER( fixed_size_log_tests );
+TREGISTER( example_test );			// Register example_test() for calling
 
-void todo_tests()
+TFUNCTION( another_test )			// A short-cut way to create and register a test function
 {
-	TBEGIN( "todo tests" );
-
-	TTODO( "Master line counting" );
-	TTODOX( 1 == 0 );
-	TTODO( "Another test" );
+	TBEGIN( "Another test" );
+	TTEST( 1==1 );
 }
 
-TREGISTER( todo_tests );
-
-TFUNCTION( test_tests )
+TFUNCTION( another_test_2 )
 {
-	TBEGIN( "Test tests" );
-
-	TDOC( "Test description" );
-	TSETUP( int t=1 );
-	TTEST( 1 != 0 );
+	TBEGIN( "Another test 2" );
+	TTEST( 1==1 );
 }
