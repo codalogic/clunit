@@ -1,5 +1,14 @@
 
 
+    Example tests (c:\home\pete\sw\clunit\test\clunit-test.cpp)
+    ==========================
+      Test description
+      : int t=1
+      More description
+    ok: 1 != 0
+    ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+
+
     Fixed size log tests (c:\home\pete\sw\clunit\test\clunit-test.cpp)
     ==========================
     ok: log.size() == 0
@@ -14,11 +23,19 @@
     ok: log.size() == 4
     ok: log.get() == SIXTEEN_CHAR_STRING EIGHT_CHAR_STRING
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+
+
+    todo tests (c:\home\pete\sw\clunit\test\clunit-test.cpp)
+    ==========================
+    ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+    ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
     ok: _CrtCheckMemory() != 0
-TODOs (3):
+TODOs (5):
 ------------------------
-- Master line counting [c:\home\pete\sw\clunit\test\clunit-test.cpp:76]
-- 1 == 0 (failing) [c:\home\pete\sw\clunit\test\clunit-test.cpp:77]
-- Another test [c:\home\pete\sw\clunit\test\clunit-test.cpp:78]
-0 error(s), 3 todo(s) after 14 test(s)
+- Need todo this [c:\home\pete\sw\clunit\test\clunit-test.cpp:45]
+- t == b (passing) [c:\home\pete\sw\clunit\test\clunit-test.cpp:46]
+- Master line counting [c:\home\pete\sw\clunit\test\clunit-test.cpp:92]
+- 1 == 0 (failing) [c:\home\pete\sw\clunit\test\clunit-test.cpp:93]
+- Another test [c:\home\pete\sw\clunit\test\clunit-test.cpp:94]
+0 error(s), 5 todo(s) after 18 test(s)

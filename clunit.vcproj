@@ -178,6 +178,10 @@
 				RelativePath=".\Test\clunit-test.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Test\main-test.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Clunit Files"

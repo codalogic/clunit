@@ -1,4 +1,4 @@
-//----------------------------------------------------------------------
+//----------------------------------------------------------------------------
 // Copyright (c) 2012, Codalogic Ltd (http://www.codalogic.com)
 // All rights reserved.
 //
@@ -31,7 +31,52 @@
 // LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 // POSSIBILITY OF SUCH DAMAGE.
-//----------------------------------------------------------------------
+//----------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------
+// To use cl::clunit, create a function in a test file that has a similar 
+// format to the example below.  To register the test function create a static
+// instance of cl::clunit with the test function as an argument. In main(), 
+// call the TRUNALL macro, which will run all the registered tests and
+// report the results.  The TFUNCTION macro allows starting a test function
+// and registering it at the same time. See clunit-test.cpp for an example.
+//
+// In the test file containing main(), do #define CLUNIT_HOME before 
+// #include "clunit.h"to ensure the key declarations are included.
+// By default the test output goes to "clunit.out". If you wish to direct 
+// the test output to a different file, do:
+//		 #define CLUNIT_OUT "tout.out"
+// or similar.
+/* Example:
+
+example-test.cpp:
+	#include "clunit.h"
+
+	void example_test()
+	{
+		TBEGIN( "Example tests" );		// Document the beginning of a test function
+
+		TDOC( "Test description" );		// Add any documentation (anywhere in function)
+		TSETUP( int t=1 );				// Do any lines needed to setup a test
+		int b=1;						// Use of TSETUP for test setup is optional
+		TTODO( "Need todo this" );		// Log any tests that need to be done
+		TTODOX( t == b );				// Log a todo that is compilable but not trying to pass yet
+		TDOC( "More description" );
+		TTEST( 1 != 0 );				// Run a test
+	}
+
+	TREGISTER( example_test );			// Register example_test() for calling
+
+main-test.cpp:
+	#define CLUNIT_HOME
+	#include "clunit.h"
+
+	void main()
+	{
+		TRUNALL();						// Run registered tests and print final pass/fail result
+	}
+*/
+//----------------------------------------------------------------------------
 
 #ifndef CLUNIT
 #define CLUNIT
@@ -85,12 +130,14 @@ public:
 	bool empty() const { return  n_items_logged == 0; }
 };
 
+#define TFUNCTION( x ) void x(); TREGISTER( x ); void x()
+#define TREGISTER( x ) static cl::clunit x ## _registered_clunit_test( x );
 #define TBEGIN( x ) cl::clunit::tbegin( x, __FILE__ )
 #define TDOC( x ) cl::clunit::tdoc( x )
 #define TSETUP( x ) cl::clunit::tsetup_log( #x ); x
 #define TTODO( x ) cl::clunit::ttodo( x, __FILE__, __LINE__ )
-#define TTODOX( x ) { bool t=(x); cl::clunit::ttodox( #x, t, __FILE__, __LINE__ ); }
-#define TTEST( x ) { bool t=(x); cl::clunit::ttest( #x, t, __FILE__, __LINE__ ); }
+#define TTODOX( x ) { cl::clunit::ttodox( #x, (x), __FILE__, __LINE__ ); }
+#define TTEST( x ) { cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ); }
 #define TRUNALL() { cl::clunit::run(); size_t n_errors = cl::clunit::report(); if( n_errors > 255 ) return 255; return n_errors; }
 
 typedef void(*job_func_ptr)();
@@ -119,7 +166,7 @@ private:
 			todo_log( 10000 )
 		{}
 
-		void add_job( job_func_ptr job )
+		void tregister( job_func_ptr job )
 		{
 			get_jobs().push_back( job );
 		}
@@ -231,7 +278,8 @@ private:
 	static singleton my_singleton;
 
 public:
-	clunit( job_func_ptr job ) { my_singleton.add_job( job ); }
+	clunit( job_func_ptr job ) { tregister( job ); }
+	static void tregister( job_func_ptr job ) { my_singleton.tregister( job ); }
 	static void tbegin( const char * what, const char * file ) { my_singleton.tbegin( what, file ); }
 	static void tdoc( const char * what ) { my_singleton.tdoc( what ); }
 	static void tsetup_log( const char * what ) { my_singleton.tsetup_log( what ); }
@@ -266,38 +314,6 @@ public:
 		return o_tout;
 	}
 #endif
-
-// cl::clunit test
-// To use cl::clunit, create a function in a test file that has a similar format to the 
-// example below.  Then assign the pseudo return value of the function to a global 
-// variable.  This will ensure that the test function is called before main is entered. 
-// In main, call the TSUMMARY function.
-//
-// In the main test file, do #define CLUNIT_HOME to ensure the main function is include.
-// If you wish to direct the test output to a different file, do:
-//		 #define CLUNIT_OUT "tout.out"
-// or similar
-/* Example:
-
-	void basic_test()
-	{
-		TBEGIN( "Test set name" );		// Setup testing for function
-		TDOC( "Test description" );		// Do any documentation
-		TSETUP( strlen( "This\n" ) );	// Do any lines needed to setup a test
-		TTODO( "Need todo this" );		// Log any tests that need to be done
-		TTODOX( a == b );				// Log a todo that is compilable but not trying to pass yet
-		TTEST( 1 != 0 );				// Run tests
-		TTEST( 2 == 2 );
-		TTEST( (1 == 0) == false );
-	}
-
-	static cl::clunit t1( basic_test );	// Ensure basic_test is registered for calling
-
-	void main()
-	{
-		TRUNALL();						// Print final pass/fail result
-	}
-*/
 
 } // End of namespace cl
 
