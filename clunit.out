@@ -1,4 +1,4 @@
-Tests run on Tue May 22 14:47:58 2012
+Tests run on Tue May 22 21:13:41 2012
 
 
     Fixed size log tests [c:\home\pete\sw\clunit\test\clunit-test.cpp:40]
@@ -22,11 +22,12 @@ Tests run on Tue May 22 14:47:58 2012
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
 
-    Test tests [c:\home\pete\sw\clunit\test\clunit-test.cpp:86]
+    Test tests [c:\home\pete\sw\clunit\test\clunit-test.cpp:88]
     ==========================
       Test description
       : int t=1
     ok: 1 != 0
+    ok: 1 == 1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
 
@@ -59,4 +60,4 @@ TODOs (5):
 - Need todo this [c:\home\pete\sw\clunit\test\example-test.cpp:45]
 - t == b (passing) [c:\home\pete\sw\clunit\test\example-test.cpp:46]
 
-0 error(s), 5 todo(s), 22 test(s)
+0 error(s), 5 todo(s), 23 test(s)

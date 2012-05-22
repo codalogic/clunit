@@ -81,6 +81,8 @@ void todo_tests()
 
 TREGISTER( todo_tests );
 
+#include "assert.h"	// For ASSERT macro used below
+
 TFUNCTION( test_tests )
 {
 	TBEGIN( "Test tests" );
@@ -88,4 +90,8 @@ TFUNCTION( test_tests )
 	TDOC( "Test description" );
 	TSETUP( int t=1 );
 	TTEST( 1 != 0 );
+	TCRITICALTEST( 1 == 1 );
+	// Commented out to avoid tests recording a test fail
+	//TCRITICALTEST( 1 == 0 );
+	//assert( 0 );	// Shouldn't get here
 }

@@ -63,6 +63,7 @@ example-test.cpp:
 		TTODOX( t == b );				// Log a todo that is compilable but not trying to pass yet
 		TDOC( "More description" );
 		TTEST( 1 != 0 );				// Run a test
+		TCRITICALTEST( 1 == 1 );		// Return from function immediately if test fails
 	}
 
 	TREGISTER( example_test );			// Register example_test() for calling
@@ -150,6 +151,7 @@ public:
 #define TTODO( x ) cl::clunit::ttodo( x, __FILE__, __LINE__ )
 #define TTODOX( x ) { cl::clunit::ttodox( #x, (x), __FILE__, __LINE__ ); }
 #define TTEST( x ) { cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ); }
+#define TCRITICALTEST( x ) { if( ! cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ) ) return; }
 #define TRUNALL() { cl::clunit::run(); size_t n_errors = cl::clunit::report(); if( n_errors > 255 ) return 255; return n_errors; }
 
 typedef void(*job_func_ptr)();
@@ -212,7 +214,7 @@ private:
 					" [" << file << ":" << line << "]\n";
 			todo_log.insert( report.str() );
 		}
-		void ttest( const char * what, bool is_passed, const char * file, int line )
+		bool ttest( const char * what, bool is_passed, const char * file, int line )
 		{
 			if( ! is_passed )
 			{
@@ -228,6 +230,7 @@ private:
 			if( ! is_passed ) 
 				tout() << " (" << __LINE__ << ")";
 			tout() << "\n";
+			return is_passed;
 		}
 		void run()
 		{
@@ -307,17 +310,28 @@ private:
 	static singleton my_singleton;
 
 public:
-	clunit( job_func_ptr job ) { tregister( job ); }
-	static void tregister( job_func_ptr job ) { my_singleton.tregister( job ); }
-	static void tbegin( const char * what, const char * file, int line ) { my_singleton.tbegin( what, file, line ); }
-	static void tdoc( const char * what ) { my_singleton.tdoc( what ); }
-	static void tsetup_log( const char * what ) { my_singleton.tsetup_log( what ); }
-	static void ttodo( const char * what, const char * file, int line ) { my_singleton.ttodo( what, file, line ); }
-	static void ttodox( const char * what, bool is_passed, const char * file, int line ) { my_singleton.ttodox( what, is_passed, file, line ); }
-	static void ttest( const char * what, bool is_passed, const char * file, int line ) { my_singleton.ttest( what, is_passed, file, line ); }
-	static void run() { my_singleton.run(); }
-	static size_t report() { return my_singleton.report(); }
-	static void clear() { my_singleton.clear(); }
+	clunit( job_func_ptr job )
+		{ tregister( job ); }
+	static void tregister( job_func_ptr job )
+		{ my_singleton.tregister( job ); }
+	static void tbegin( const char * what, const char * file, int line )
+		{ my_singleton.tbegin( what, file, line ); }
+	static void tdoc( const char * what )
+		{ my_singleton.tdoc( what ); }
+	static void tsetup_log( const char * what )
+		{ my_singleton.tsetup_log( what ); }
+	static void ttodo( const char * what, const char * file, int line )
+		{ my_singleton.ttodo( what, file, line ); }
+	static void ttodox( const char * what, bool is_passed, const char * file, int line )
+		{ my_singleton.ttodox( what, is_passed, file, line ); }
+	static bool ttest( const char * what, bool is_passed, const char * file, int line )
+		{ return my_singleton.ttest( what, is_passed, file, line ); }
+	static void run()
+		{ my_singleton.run(); }
+	static size_t report()
+		{ return my_singleton.report(); }
+	static void clear()
+		{ my_singleton.clear(); }
 };
 
 #ifdef CLUNIT_HOME
