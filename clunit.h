@@ -97,9 +97,9 @@ main-test.cpp:
 #include <vector>
 #include <string>
 #include <ctime>
-#include <crtdbg.h>
 
 #ifdef _MSC_VER
+	#include <crtdbg.h>
 	extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA( const char * lpOutputString );
 	#define TVS_DEBUG_CONSOLE_OUT( x ) OutputDebugStringA( (x).c_str() )
 #else
@@ -251,9 +251,11 @@ private:
 					task != task_end;
 					++task )
 			{ 
+#ifdef _MSC_VER
 				_CrtMemState s1, s2, s3;
 				// Store a memory checkpoint in the s1 memory-state structure
 				_CrtMemCheckpoint( &s1 );
+#endif
 
 				try
 				{
@@ -265,6 +267,7 @@ private:
 					TTEST( "Unhandled exception" == NULL );		// Force fail case
 				}
 
+#ifdef _MSC_VER
 				// Store a 2nd memory checkpoint in s2
 				_CrtMemCheckpoint( &s2 );
 				TTEST( ! _CrtMemDifference( &s3, &s1, &s2 ) );
@@ -273,9 +276,12 @@ private:
 					_CrtMemDumpStatistics( &s3 );
 					_CrtMemDumpAllObjectsSince( &s1 );
 				}
+#endif
 			}
 
+#ifdef _MSC_VER
 			TTEST( _CrtCheckMemory() != 0 );
+#endif
 		}
 		size_t report()
 		{
