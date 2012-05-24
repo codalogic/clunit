@@ -228,7 +228,7 @@ private:
 			++n_tests;
 			tout() << "ok: " << what;
 			if( ! is_passed ) 
-				tout() << " (" << __LINE__ << ")";
+				tout() << " (" << line << ")";
 			tout() << "\n";
 			return is_passed;
 		}
