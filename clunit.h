@@ -366,4 +366,4 @@ public:
 
 } // End of namespace cl
 
-#endif CLUNIT
+#endif // CLUNIT

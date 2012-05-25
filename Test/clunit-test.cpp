@@ -89,6 +89,7 @@ TFUNCTION( test_tests )
 
 	TDOC( "Test description" );
 	TSETUP( int t=1 );
+	(void)t;	// Avoid gcc warning
 	TTEST( 1 != 0 );
 	TCRITICALTEST( 1 == 1 );
 	// Commented out to avoid tests recording a test fail
