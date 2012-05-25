@@ -23,3 +23,9 @@
 *.ncb
 *.idb
 *.htm
+
+# Linux bits
+*.swp
+
+# Project specific ignores
+clunit-test
