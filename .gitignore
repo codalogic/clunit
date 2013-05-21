@@ -23,6 +23,9 @@
 *.ncb
 *.idb
 *.htm
+*.res
+*.manifest
+*.user
 
 # Linux bits
 *.swp
