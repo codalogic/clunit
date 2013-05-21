@@ -1,7 +1,7 @@
-Tests run on Fri May 25 13:26:23 2012
+Tests run on Tue May 21 12:38:29 2013
 
 
-    Fixed size log tests [c:\home\pete\sw\clunit\test\clunit-test.cpp:40]
+    Fixed size log tests [c:\pete\sw\clunit\test\clunit-test.cpp:40]
     ==========================
     ok: log.size() == 0
     ok: log.empty()
@@ -17,12 +17,12 @@ Tests run on Fri May 25 13:26:23 2012
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
 
-    todo tests [c:\home\pete\sw\clunit\test\clunit-test.cpp:75]
+    todo tests [c:\pete\sw\clunit\test\clunit-test.cpp:75]
     ==========================
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
 
-    Test tests [c:\home\pete\sw\clunit\test\clunit-test.cpp:88]
+    Test tests [c:\pete\sw\clunit\test\clunit-test.cpp:88]
     ==========================
       Test description
       : int t=1
@@ -31,7 +31,7 @@ Tests run on Fri May 25 13:26:23 2012
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
 
-    Example tests [c:\home\pete\sw\clunit\test\example-test.cpp:40]
+    Example tests [c:\pete\sw\clunit\test\example-test.cpp:40]
     ==========================
       Test description
       : int t=1
@@ -40,13 +40,13 @@ Tests run on Fri May 25 13:26:23 2012
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
 
-    Another test [c:\home\pete\sw\clunit\test\example-test.cpp:55]
+    Another test [c:\pete\sw\clunit\test\example-test.cpp:55]
     ==========================
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
 
-    Another test 2 [c:\home\pete\sw\clunit\test\example-test.cpp:61]
+    Another test 2 [c:\pete\sw\clunit\test\example-test.cpp:61]
     ==========================
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
@@ -54,10 +54,10 @@ Tests run on Fri May 25 13:26:23 2012
 
 TODOs (5):
 ------------------------
-- Master line counting [c:\home\pete\sw\clunit\test\clunit-test.cpp:77]
-- 1 == 0 (failing) [c:\home\pete\sw\clunit\test\clunit-test.cpp:78]
-- Another test [c:\home\pete\sw\clunit\test\clunit-test.cpp:79]
-- Need todo this [c:\home\pete\sw\clunit\test\example-test.cpp:45]
-- t == b (passing) [c:\home\pete\sw\clunit\test\example-test.cpp:46]
+- Master line counting [c:\pete\sw\clunit\test\clunit-test.cpp:77]
+- 1 == 0 (failing) [c:\pete\sw\clunit\test\clunit-test.cpp:78]
+- Another test [c:\pete\sw\clunit\test\clunit-test.cpp:79]
+- Need todo this [c:\pete\sw\clunit\test\example-test.cpp:45]
+- t == b (passing) [c:\pete\sw\clunit\test\example-test.cpp:46]
 
 0 error(s), 5 todo(s), 23 test(s)
