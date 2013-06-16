@@ -43,6 +43,7 @@ TFUNCTION( example_test )
 	TSETUP( int t=1 );				// Do any lines needed to setup a test
 	int b=1;						// Use of TSETUP for test setup is optional
 	TTODO( "Need todo this" );		// Log any tests that need to be done
+	TTODON( 2, "Need todo this" );	// As above but with a depth indicator (i.e. 2) to help prioritise work
 	TTODOX( t == b );				// Log a todo that is compilable but not trying to pass yet
 	TTODOXN( 2, t == b );			// As above but with a depth indicator (i.e. 2) to help prioritise work
 	TDOC( "More description" );

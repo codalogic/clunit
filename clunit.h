@@ -58,6 +58,7 @@ example-test.cpp:
 		TSETUP( int t=1 );				// Do any lines needed to setup a test
 		int b=1;						// Use of TSETUP for test setup is optional
 		TTODO( "Need todo this" );		// Log any tests that need to be done
+		TTODON( 2, "Need todo this" );	// As above but with a depth indicator (i.e. 2) to help prioritise work
 		TTODOX( t == b );				// Log a todo that is compilable but not trying to pass yet
 		TTODOXN( 2, t == b );			// A version of TTODOX() with a depth indicator
 		TDOC( "More description" );
@@ -139,6 +140,7 @@ public:
 #define TDOC( x ) cl::clunit::tdoc( x )
 #define TSETUP( x ) cl::clunit::tsetup_log( #x ); x
 #define TTODO( x ) cl::clunit::ttodo( x, __FILE__, __LINE__ )
+#define TTODON( n, x ) cl::clunit::ttodo( "[" #n "] " x, __FILE__, __LINE__ )
 #define TTODOX( x ) { cl::clunit::ttodox( #x, (x), __FILE__, __LINE__ ); }
 #define TTODOXN( n, x ) { cl::clunit::ttodox( "[" #n "] " #x, (x), __FILE__, __LINE__ ); }
 #define TTEST( x ) { cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ); }
