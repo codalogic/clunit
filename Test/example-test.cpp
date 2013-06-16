@@ -35,7 +35,7 @@
 
 #include "clunit.h"
 
-void example_test()
+TFUNCTION( example_test )
 {
 	TBEGIN( "Example tests" );		// Document the beginning of a test function
 
@@ -44,11 +44,11 @@ void example_test()
 	int b=1;						// Use of TSETUP for test setup is optional
 	TTODO( "Need todo this" );		// Log any tests that need to be done
 	TTODOX( t == b );				// Log a todo that is compilable but not trying to pass yet
+	TTODOXN( 2, t == b );			// As above but with a depth indicator (i.e. 2) to help prioritise work
 	TDOC( "More description" );
 	TTEST( 1 != 0 );				// Run a test
+	TTESTN( 2, 1 != 0 );			// A runable version of TTODOXN()
 }
-
-TREGISTER( example_test );			// Register example_test() for calling
 
 TFUNCTION( another_test )			// A short-cut way to create and register a test function
 {

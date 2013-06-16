@@ -77,6 +77,7 @@ void todo_tests()
 	TTODO( "Master line counting" );
 	TTODOX( 1 == 0 );
 	TTODO( "Another test" );
+	TTODOXN( 2, 1 == 0 );
 }
 
 TREGISTER( todo_tests );
