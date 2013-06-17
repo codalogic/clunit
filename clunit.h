@@ -99,6 +99,23 @@ main-test.cpp:
 
 namespace cl {
 
+#define TFUNCTION( x ) static void x(); TREGISTER( x ); void x()
+#define TREGISTER( x ) static cl::clunit x ## _registered_clunit_test( x );
+#define TBEGIN( x ) cl::clunit::tbegin( x, __FILE__, __LINE__ )
+#define TDOC( x ) cl::clunit::tdoc( x )
+#define TSETUP( x ) cl::clunit::tsetup_log( #x ); x
+#define TTODO( x ) cl::clunit::ttodo( x, __FILE__, __LINE__ )
+#define TTODON( n, x ) cl::clunit::ttodo( "[" #n "] " x, __FILE__, __LINE__ )
+#define TTODOX( x ) { cl::clunit::ttodox( #x, (x), __FILE__, __LINE__ ); }
+#define TTODOXN( n, x ) { cl::clunit::ttodox( "[" #n "] " #x, (x), __FILE__, __LINE__ ); }
+#define TTEST( x ) { cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ); }
+#define TTESTN( n, x ) TTEST( x )
+#define TCRITICALTEST( x ) { if( ! cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ) ) return; }
+#define TRUNALL() { cl::clunit::run(); size_t n_errors = cl::clunit::report(); if( n_errors > 255 ) return 255; return n_errors; }
+
+typedef void(*job_func_ptr)();
+typedef std::vector< job_func_ptr > job_list;
+
 class fixed_size_log
 {
 	// We want to log TODO operations while carrying out tests, but also
@@ -133,23 +150,6 @@ public:
 	size_t size() const { return n_items_logged; }
 	bool empty() const { return  n_items_logged == 0; }
 };
-
-#define TFUNCTION( x ) static void x(); TREGISTER( x ); void x()
-#define TREGISTER( x ) static cl::clunit x ## _registered_clunit_test( x );
-#define TBEGIN( x ) cl::clunit::tbegin( x, __FILE__, __LINE__ )
-#define TDOC( x ) cl::clunit::tdoc( x )
-#define TSETUP( x ) cl::clunit::tsetup_log( #x ); x
-#define TTODO( x ) cl::clunit::ttodo( x, __FILE__, __LINE__ )
-#define TTODON( n, x ) cl::clunit::ttodo( "[" #n "] " x, __FILE__, __LINE__ )
-#define TTODOX( x ) { cl::clunit::ttodox( #x, (x), __FILE__, __LINE__ ); }
-#define TTODOXN( n, x ) { cl::clunit::ttodox( "[" #n "] " #x, (x), __FILE__, __LINE__ ); }
-#define TTEST( x ) { cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ); }
-#define TTESTN( n, x ) TTEST( x )
-#define TCRITICALTEST( x ) { if( ! cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ) ) return; }
-#define TRUNALL() { cl::clunit::run(); size_t n_errors = cl::clunit::report(); if( n_errors > 255 ) return 255; return n_errors; }
-
-typedef void(*job_func_ptr)();
-typedef std::vector< job_func_ptr > job_list;
 
 class clunit
 {
