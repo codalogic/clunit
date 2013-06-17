@@ -182,7 +182,7 @@ private:
 		{
 			std::ostringstream documentation;
 			documentation << 
-					"    " << what << " [" << file << ":" << line << "]\n" <<
+					"    " << what << " [" << file_base( file ) << ":" << line << "]\n" <<
 					"    ==========================\n";
 			print_to_all_outputs( documentation.str() );
 		}
@@ -197,7 +197,7 @@ private:
 		void ttodo( const char * what, const char * file, int line )
 		{
 			std::ostringstream report;
-			report << "- " << what << " [" << file << ":" << line << "]\n";
+			report << "- " << what << " [" << file_base( file ) << ":" << line << "]\n";
 			todo_log.insert( report.str() );
 		}
 		void ttodox( const char * what, bool is_passed, const char * file, int line )
@@ -205,7 +205,7 @@ private:
 			std::ostringstream report;
 			report << "- " << 
 					what << ((is_passed)?" (passing)":" (failing)") << 
-					" [" << file << ":" << line << "]\n";
+					" [" << file_base( file ) << ":" << line << "]\n";
 			todo_log.insert( report.str() );
 		}
 		bool ttest( const char * what, bool is_passed, const char * file, int line )
@@ -305,6 +305,18 @@ private:
 			TVS_DEBUG_CONSOLE_OUT( message );
 		}
 		void clear() { get_jobs().clear(); }
+	private:
+		static const char * file_base( const char * p_file )
+		{
+			const char * p_base = p_file;
+			for( const char * p_seek = "/\\:"; *p_seek; ++p_seek )
+			{
+				const char * p_found = strrchr( p_base, *p_seek );
+				if( p_found && *(p_found + 1) )
+					p_base = p_found + 1;
+			}
+			return p_base;
+		}
 	};
 	
 	static singleton my_singleton;
