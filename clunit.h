@@ -71,7 +71,7 @@ main-test.cpp:
 	#define CLUNIT_HOME
 	#include "clunit.h"
 
-	void main()
+	int main()
 	{
 		TRUNALL();						// Run registered tests and print final pass/fail result
 	}
