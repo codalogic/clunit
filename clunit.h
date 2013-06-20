@@ -210,20 +210,25 @@ private:
 		}
 		bool ttest( const char * what, bool is_passed, const char * file, int line )
 		{
+			std::ostringstream report;
 			if( ! is_passed )
 			{
-				tout() << "not ";
+				report << "not ";
 				++n_errors;
 			}
 			else
 			{
-				tout() << "    ";
+				report << "    ";
 			} 
 			++n_tests;
-			tout() << "ok: " << what;
+			report << "ok: " << what;
 			if( ! is_passed ) 
-				tout() << " (" << line << ")";
-			tout() << "\n";
+				report << " (" << line << ")";
+			report << "\n";
+			if( is_passed )
+				tout() << report.str();
+			else
+				print_to_all_outputs( report.str() );
 			return is_passed;
 		}
 		void run()
