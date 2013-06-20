@@ -1,5 +1,4 @@
-Tests run on Thu Jun 20 09:59:53 2013
-
+Tests run on Thu Jun 20 10:40:35 2013
 
     Fixed size log tests [clunit-test.cpp:40]
     ==========================
@@ -16,11 +15,9 @@ Tests run on Thu Jun 20 09:59:53 2013
     ok: log.get() == SIXTEEN_CHAR_STRING EIGHT_CHAR_STRING
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
-
     todo tests [clunit-test.cpp:75]
     ==========================
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
-
 
     Test tests [clunit-test.cpp:89]
     ==========================
@@ -29,7 +26,6 @@ Tests run on Thu Jun 20 09:59:53 2013
     ok: 1 != 0
     ok: 1 == 1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
-
 
     Example tests [example-test.cpp:40]
     ==========================
@@ -40,12 +36,10 @@ Tests run on Thu Jun 20 09:59:53 2013
     ok: 1 != 0
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
-
     Another test [example-test.cpp:56]
     ==========================
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
-
 
     Another test 2 [example-test.cpp:62]
     ==========================
