@@ -1,7 +1,7 @@
-Tests run on Sat Jun 22 15:54:15 2013
+Tests run on Sat Jun 22 16:01:34 2013
 
     Fixed size log tests [clunit-test.cpp:40]
-    ==========================
+    =========================================
     ok: log.size() == 0
     ok: log.empty()
     ok: log.size() == 1
@@ -16,11 +16,11 @@ Tests run on Sat Jun 22 15:54:15 2013
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     todo tests [clunit-test.cpp:75]
-    ==========================
+    ===============================
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     Test tests [clunit-test.cpp:89]
-    ==========================
+    ===============================
       Test description
       : int t=1
     ok: 1 != 0
@@ -28,17 +28,17 @@ Tests run on Sat Jun 22 15:54:15 2013
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     First feature [clunit-test.cpp:101]
-    ==========================
+    ===================================
     ok: 1 != 0
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     Second feature [clunit-test.cpp:106]
-    ==========================
+    ====================================
     ok: 1 != 0
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     Example tests [example-test.cpp:38]
-    ==========================
+    ===================================
       Test description
       : int t=1
       More description
@@ -47,17 +47,17 @@ Tests run on Sat Jun 22 15:54:15 2013
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     Test another feature [example-test.cpp:52]
-    ==========================
+    ==========================================
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     Another test [example-test.cpp:59]
-    ==========================
+    ==================================
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     Another test 2 [example-test.cpp:65]
-    ==========================
+    ====================================
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
     ok: _CrtCheckMemory() != 0

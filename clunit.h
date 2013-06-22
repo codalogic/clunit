@@ -209,11 +209,12 @@ private:
 		}
 		void tbegin( const char * what, const char * file, int line )
 		{
+			std::string indent( "    " );
 			std::ostringstream documentation;
-			documentation <<
-					"    " << what << " [" << file_base( file ) << ":" << line << "]\n" <<
-					"    ==========================\n";
-			print_to_all_outputs( documentation.str() );
+			documentation << what << " [" << file_base( file ) << ":" << line << "]";
+			std::string heading( documentation.str() );
+			std::string underline( heading.size(), '=' );
+			print_to_all_outputs( indent + heading + "\n" + indent + underline + "\n" );
 		}
 		void tdoc( const char * what )
 		{
