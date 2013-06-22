@@ -35,10 +35,8 @@
 
 #include "clunit.h"
 
-TFUNCTION( example_test )
+TFEATURE( "Example tests" )		// Register test with descriptive name
 {
-	TBEGIN( "Example tests" );		// Document the beginning of a test function
-
 	TDOC( "Test description" );		// Add any documentation (anywhere in function)
 	TSETUP( int t=1 );				// Do any lines needed to setup a test
 	int b=1;						// Use of TSETUP for test setup is optional
@@ -51,9 +49,14 @@ TFUNCTION( example_test )
 	TTESTN( 2, 1 != 0 );			// A runable version of TTODOXN()
 }
 
-TFUNCTION( another_test )			// A short-cut way to create and register a test function
+TFEATURE( "Test another feature" )
 {
-	TBEGIN( "Another test" );
+	TTEST( 1==1 );
+}
+
+TFUNCTION( another_test )			// Register a test function without description
+{
+	TBEGIN( "Another test" );		// Manually display description during test run
 	TTEST( 1==1 );
 }
 

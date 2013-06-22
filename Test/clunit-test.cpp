@@ -97,3 +97,13 @@ TFUNCTION( test_tests )
 	//TCRITICALTEST( 1 == 0 );
 	//assert( 0 );	// Shouldn't get here
 }
+
+TFEATURE( "First feature" )
+{
+	TTEST( 1 != 0 );
+}
+
+TFEATURE( "Second feature" )
+{
+	TTEST( 1 != 0 );
+}

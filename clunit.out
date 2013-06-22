@@ -1,4 +1,4 @@
-Tests run on Thu Jun 20 10:40:35 2013
+Tests run on Sat Jun 22 15:54:15 2013
 
     Fixed size log tests [clunit-test.cpp:40]
     ==========================
@@ -27,7 +27,17 @@ Tests run on Thu Jun 20 10:40:35 2013
     ok: 1 == 1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
-    Example tests [example-test.cpp:40]
+    First feature [clunit-test.cpp:101]
+    ==========================
+    ok: 1 != 0
+    ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+
+    Second feature [clunit-test.cpp:106]
+    ==========================
+    ok: 1 != 0
+    ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+
+    Example tests [example-test.cpp:38]
     ==========================
       Test description
       : int t=1
@@ -36,12 +46,17 @@ Tests run on Thu Jun 20 10:40:35 2013
     ok: 1 != 0
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
-    Another test [example-test.cpp:56]
+    Test another feature [example-test.cpp:52]
     ==========================
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
-    Another test 2 [example-test.cpp:62]
+    Another test [example-test.cpp:59]
+    ==========================
+    ok: 1==1
+    ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+
+    Another test 2 [example-test.cpp:65]
     ==========================
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
@@ -53,9 +68,9 @@ TODOs (8):
 - 1 == 0 (failing) [clunit-test.cpp:78]
 - Another test [clunit-test.cpp:79]
 - [2] 1 == 0 (failing) [clunit-test.cpp:80]
-- Need todo this [example-test.cpp:45]
-- [2] Need todo this [example-test.cpp:46]
-- t == b (passing) [example-test.cpp:47]
-- [2] t == b (passing) [example-test.cpp:48]
+- Need todo this [example-test.cpp:43]
+- [2] Need todo this [example-test.cpp:44]
+- t == b (passing) [example-test.cpp:45]
+- [2] t == b (passing) [example-test.cpp:46]
 
-0 error(s), 8 todo(s), 24 test(s)
+0 error(s), 8 todo(s), 30 test(s)
