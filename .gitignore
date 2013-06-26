@@ -32,3 +32,4 @@
 
 # Project specific ignores
 clunit-test
+fix-eol.pl
