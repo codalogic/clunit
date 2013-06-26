@@ -47,6 +47,8 @@ TFEATURE( "Example tests" )		// Register test with descriptive name
 	TDOC( "More description" );
 	TTEST( 1 != 0 );				// Run a test
 	TTESTN( 2, 1 != 0 );			// A runable version of TTODOXN()
+	TCRITICALTEST( 1 == 1 );		// Return from function immediately if test fails
+	TCRITICALTESTN( 2, 1 == 1 );	// Version of TCRITICALTEST() with depth indicator
 }
 
 TFEATURE( "Test another feature" )

@@ -59,6 +59,7 @@ example-test.cpp:
 		TTEST( 1 != 0 );				// Run a test
 		TTESTN( 2, 1 != 0 );			// A version of TTEST() to mirror TTODOXN()
 		TCRITICALTEST( 1 == 1 );		// Return from function immediately if test fails
+		TCRITICALTESTN( 2, 1 == 1 );	// Version of TCRITICALTEST() with depth indicator
 	}
 */
 //
@@ -123,6 +124,7 @@ namespace cl {
 #define TTEST( x ) { cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ); }
 #define TTESTN( n, x ) TTEST( x )
 #define TCRITICALTEST( x ) { if( ! cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ) ) return; }
+#define TCRITICALTESTN( n, x ) TCRITICALTEST( x )
 #define TRUNALL() { cl::clunit::run(); size_t n_errors = cl::clunit::report(); if( n_errors > 255 ) return 255; return n_errors; }
 
 typedef void(*job_func_ptr)();

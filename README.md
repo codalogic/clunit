@@ -29,6 +29,7 @@ example-test.cpp:
 		TTEST( 1 != 0 );				// Run a test
 		TTESTN( 2, 1 != 0 );			// A version of TTEST() to mirror TTODOXN()
 		TCRITICALTEST( 1 == 1 );		// Return from function immediately if test fails
+		TCRITICALTESTN( 2, 1 == 1 );	// Version of TCRITICALTEST() with depth indicator
 	}
 ```
 
