@@ -32,20 +32,16 @@
 //----------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------
-// To use cl::clunit, create a function in a test file that has a similar 
-// format to the example below.  To register the test function create a static
-// instance of cl::clunit with the test function as an argument. In main(), 
-// call the TRUNALL macro, which will run all the registered tests and
-// report the results.  The TFUNCTION() macro allows starting a test function
-// and registering it at the same time. See example-test.cpp for an example.
+// cl::clunit, is a simple C++ unit testing framework.  It's USP is that it
+// supports to-do statements so that you can easily record tests that you plan
+// to do, but haven't implemented yet.  This allows you to plan ahead, but 
+// only work on one test at a time.
 //
-// In the test file containing main(), do #define CLUNIT_HOME before 
-// #include "clunit.h"to ensure the key declarations are included.
-// By default the test output goes to "clunit.out". If you wish to direct 
-// the test output to a different file, do:
-//		 #define CLUNIT_OUT "tout.out"
-// or similar.
-/* Example:
+// A test function is created using the TFEATURE( "A descriptive string" ) 
+// macro.  This represents the beginning of a test function that is
+// automagically registered for execution when the tests are initiated.
+//
+/* For example:
 
 example-test.cpp:
 	#include "clunit.h"
@@ -64,6 +60,13 @@ example-test.cpp:
 		TTESTN( 2, 1 != 0 );			// A version of TTEST() to mirror TTODOXN()
 		TCRITICALTEST( 1 == 1 );		// Return from function immediately if test fails
 	}
+*/
+//
+// The tests are initiated by calling the TRUNALL(); macro in the test
+// programs main() function.  Before doing #include "clunit.h" in the test
+// file containing main(), be sure #define CLUNIT_HOME first.
+//
+/* For example:
 
 main-test.cpp:
 	#define CLUNIT_HOME
@@ -71,9 +74,14 @@ main-test.cpp:
 
 	int main()
 	{
-		TRUNALL();						// Run registered tests and print final pass/fail result
+		TRUNALL();	// Run registered tests and print final pass/fail result
 	}
 */
+//
+// By default the test output goes to "clunit.out". If you wish to direct 
+// the test output to a different file, do:
+//		 #define CLUNIT_OUT "tout.out"
+// or similar.
 //----------------------------------------------------------------------------
 
 #ifndef CLUNIT
