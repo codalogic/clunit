@@ -4,7 +4,7 @@ clunit
 cl::clunit, is a simple C++ unit testing framework.  It's USP is that it
 supports to-do statements so that you can easily record tests that you plan
 to do, but haven't implemented yet.  This allows you to plan ahead, but 
-only work on one test at a time.
+still only work on fixing one test at a time.
 
 A test function is created using the TFEATURE( "A descriptive string" ) 
 macro.  This represents the beginning of a test function that is
@@ -33,8 +33,8 @@ example-test.cpp:
 ```
 
 The tests are initiated by calling the TRUNALL(); macro in the test
-programs main() function.  Before doing #include "clunit.h" in the test
-file containing main(), be sure #define CLUNIT_HOME first.
+program's main() function.  Before doing #include "clunit.h" in the test
+file containing main(), be sure to #define CLUNIT_HOME first.
 
 For example:
 
