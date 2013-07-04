@@ -107,3 +107,7 @@ TFEATURE( "Second feature" )
 {
     TTEST( 1 != 0 );
 }
+
+TFEATTODO( "Feature Todo" );
+
+TFEATTODON( 2, "Feature N Todo" );

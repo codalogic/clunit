@@ -32,6 +32,17 @@ example-test.cpp:
         TCRITICALTESTN( 2, 1 == 1 );    // Version of TCRITICALTEST() with depth indicator
     }
 ```
+A note can be made of features that need to be tested using the TFEATTODO()
+macros.  These effectively create a test function containing a single 
+TTODO() test description macro.
+
+For example (not in a function):
+
+```cpp
+    TFEATTODO( "Feature Todo" );		// A quick way of recording a feature that needs testing
+
+    TFEATTODON( 2, "Feature N Todo" );	// As above but with a depth indicator
+```
 
 The tests are initiated by calling the TRUNALL(); macro in the test
 program's main() function.  Before doing #include "clunit.h" in the test
