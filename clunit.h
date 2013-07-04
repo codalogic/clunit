@@ -110,15 +110,15 @@ namespace cl {
 #define TCAT2( x, y ) x ## y
 
 #define TFEATURE( d ) TFEATURE_IMPL( d, TCAT( test_func_, __LINE__ ) )
-#define TFEATURE_IMPL( d, x ) static void x(); TREGISTERD( x, d ); void x()
-#define TREGISTERD( x, d ) static cl::clunit x ## _registered_clunit_test( x, d, __FILE__, __LINE__ );
-#define TFUNCTION( x ) static void x(); TREGISTER( x ); void x()
-#define TREGISTER( x ) static cl::clunit x ## _registered_clunit_test( x );
-#define TBEGIN( x ) cl::clunit::tbegin( x, __FILE__, __LINE__ )
-#define TDOC( x ) cl::clunit::tdoc( x )
+#define TFEATURE_IMPL( d, f ) static void f(); TREGISTERD( f, d ); void f()
+#define TREGISTERD( f, d ) static cl::clunit f ## _registered_clunit_test( f, d, __FILE__, __LINE__ );
+#define TFUNCTION( f ) static void f(); TREGISTER( f ); void f()
+#define TREGISTER( f ) static cl::clunit f ## _registered_clunit_test( f );
+#define TBEGIN( d ) cl::clunit::tbegin( d, __FILE__, __LINE__ )
+#define TDOC( d ) cl::clunit::tdoc( d )
 #define TSETUP( x ) cl::clunit::tsetup_log( #x ); x
-#define TTODO( x ) cl::clunit::ttodo( x, __FILE__, __LINE__ )
-#define TTODON( n, x ) cl::clunit::ttodo( "[" #n "] " x, __FILE__, __LINE__ )
+#define TTODO( d ) cl::clunit::ttodo( d, __FILE__, __LINE__ )
+#define TTODON( n, d ) cl::clunit::ttodo( "[" #n "] " d, __FILE__, __LINE__ )
 #define TTODOX( x ) { cl::clunit::ttodox( #x, (x), __FILE__, __LINE__ ); }
 #define TTODOXN( n, x ) { cl::clunit::ttodox( "[" #n "] " #x, (x), __FILE__, __LINE__ ); }
 #define TTEST( x ) { cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ); }
