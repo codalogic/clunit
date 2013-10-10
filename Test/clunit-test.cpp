@@ -108,6 +108,16 @@ TFEATURE( "Second feature" )
     TTEST( 1 != 0 );
 }
 
+void func( int ignore1, const char * p_left, const char * p_right )
+{
+    TTEST( strcmp( p_left, p_right ) == 0 );
+}
+
+TFEATURE( "TCALL" )
+{
+    TCALL( func( 12, "y", "y" ) );
+}
+
 TFEATTODO( "Feature Todo" );
 
 TFEATTODON( 2, "Feature N Todo" );

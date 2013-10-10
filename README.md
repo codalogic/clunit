@@ -30,6 +30,7 @@ example-test.cpp:
         TTESTN( 2, 1 != 0 );            // A version of TTEST() to mirror TTODOXN()
         TCRITICALTEST( 1 == 1 );        // Return from function immediately if test fails
         TCRITICALTESTN( 2, 1 == 1 );    // Version of TCRITICALTEST() with depth indicator
+        TCALL( func( 12, "y", "y" ) );  // Call a test function
     }
 ```
 A note can be made of features that need to be tested using the TFEATTODO()

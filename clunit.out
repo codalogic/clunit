@@ -1,4 +1,4 @@
-Tests run on Thu Jul 04 17:28:39 2013
+Tests run on Thu Oct 10 13:04:29 2013
 
     Fixed size log tests [clunit-test.cpp:40]
     =========================================
@@ -35,6 +35,12 @@ Tests run on Thu Jul 04 17:28:39 2013
     Second feature [clunit-test.cpp:106]
     ====================================
     ok: 1 != 0
+    ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+
+    TCALL [clunit-test.cpp:116]
+    ===========================
+      Calling: func( 12, "y", "y" ) (118)
+    ok: strcmp( p_left, p_right ) == 0
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
@@ -78,8 +84,8 @@ TODOs (12):
 - 1 == 0 (failing) [clunit-test.cpp:78]
 - Another test [clunit-test.cpp:79]
 - [2] 1 == 0 (failing) [clunit-test.cpp:80]
-- Feature Todo [clunit-test.cpp:111]
-- [2] Feature N Todo [clunit-test.cpp:113]
+- Feature Todo [clunit-test.cpp:121]
+- [2] Feature N Todo [clunit-test.cpp:123]
 - Need todo this [example-test.cpp:43]
 - [2] Need todo this [example-test.cpp:44]
 - t == b (passing) [example-test.cpp:45]
@@ -87,4 +93,4 @@ TODOs (12):
 - Feature Todo [example-test.cpp:71]
 - [2] Feature N Todo [example-test.cpp:73]
 
-0 error(s), 12 todo(s), 36 test(s)
+0 error(s), 12 todo(s), 38 test(s)
