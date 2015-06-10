@@ -33,10 +33,5 @@
 // POSSIBILITY OF SUCH DAMAGE.
 //----------------------------------------------------------------------------
 
-#define CLUNIT_HOME
+#define CLUNIT_MAIN
 #include "clunit.h"
-
-int main( int argc, char * argv[] )
-{
-    TRUNALL();
-}

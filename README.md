@@ -6,7 +6,7 @@ supports to-do statements so that you can easily record tests that you plan
 to do, but haven't implemented yet.  This allows you to plan ahead, but
 still only work on fixing one test at a time.
 
-A test function is created using the TFEATURE( "A descriptive string" )
+A test function is created using the `TFEATURE( "A descriptive string" )`
 macro.  This represents the beginning of a test function that is
 automagically registered for execution when the tests are initiated.
 
@@ -35,9 +35,9 @@ example-test.cpp:
         TCALL( func( 12, "y", "y" ) );  // Call a test function
     }
 ```
-A note can be made of features that need to be tested using the TFEATTODO()
+A note can be made of features that need to be tested using the `TFEATTODO()`
 macros.  These effectively create a test function containing a single
-TTODO() test description macro.
+`TTODO()` test description macro.
 
 For example (not in a function):
 
@@ -47,20 +47,33 @@ For example (not in a function):
     TFEATTODON( 2, "Feature N Todo" );  // As above but with a depth indicator
 ```
 
-The tests are initiated by calling the TRUNALL(); macro in the test
-program's main() function.  Before doing #include "clunit.h" in the test
-file containing main(), be sure to #define CLUNIT_HOME first.
+The simplest way to initiate the testing is to `#define CLUNIT_MAIN` in a single
+source file before doing `#include "clunit.h"`.  For example:
 
-For example:
+```cpp
+    #define CLUNIT_MAIN
+    #include "clunit.h"
+```
 
-main-test.cpp:
+This creates a `main()` function which invokes the `TRUNALL()` macro.
+
+If you wish to specify your own `main()` function, then you can `#define CLUNIT_HOME`
+before doing `#include "clunit.h"` in a single source code file.
+
+Such a file might look like:
+
+test-main.cpp:
 ```cpp
     #define CLUNIT_HOME
     #include "clunit.h"
 
     int main()
     {
+        // TODO: Setup
+
         TRUNALL();  // Run registered tests and print final pass/fail result
+
+        // TODO: Cleanup
     }
 ```
 
@@ -69,4 +82,4 @@ the test output to a different file, do:
      #define CLUNIT_OUT "tout.out"
 or similar.
 
-See clunit.h for further description of how to use the code.
+See `clunit.h` for further description of how to use the code.
