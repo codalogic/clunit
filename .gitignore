@@ -33,3 +33,4 @@
 # Project specific ignores
 clunit-test
 fix-eol.pl
+fix-eol.bat
