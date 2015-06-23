@@ -141,8 +141,8 @@ namespace cl {
 #define TCRITICALTEST( x ) { if( ! cl::clunit::ttest( #x, (x), __FILE__, __LINE__ ) ) return; }
 #define TCRITICALTESTN( n, x ) TCRITICALTEST( x )
 #define TCALL( x ) { cl::clunit::tcall( #x, __FILE__, __LINE__ ); (x); }
-#define TFEATTODO( d ) TFUNCTION( TCAT( todo_function_, __LINE__ ) ) { TTODO( d ); }
-#define TFEATTODON( n, d ) TFUNCTION( TCAT( todo_function_, __LINE__ ) ) { TTODON( n, d ); }
+#define TFEATURETODO( d ) TFUNCTION( TCAT( todo_function_, __LINE__ ) ) { TTODO( d ); }
+#define TFEATURETODON( n, d ) TFUNCTION( TCAT( todo_function_, __LINE__ ) ) { TTODON( n, d ); }
 #define TRUNALL() { cl::clunit::run(); size_t n_errors = cl::clunit::report(); if( n_errors > 255 ) return 255; return n_errors; }
 
 typedef void(*job_func_ptr)();

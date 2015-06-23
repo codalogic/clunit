@@ -68,6 +68,6 @@ TFUNCTION( another_test_2 )
     TTEST( 1==1 );
 }
 
-TFEATTODO( "Feature Todo" );        // A quick way of recording a feature that needs testing
+TFEATURETODO( "Feature Todo" );        // A quick way of recording a feature that needs testing
 
-TFEATTODON( 2, "Feature N Todo" );  // As above but with a depth indicator
+TFEATURETODON( 2, "Feature N Todo" );  // As above but with a depth indicator

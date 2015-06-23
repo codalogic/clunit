@@ -118,6 +118,6 @@ TFEATURE( "TCALL" )
     TCALL( func( 12, "y", "y" ) );
 }
 
-TFEATTODO( "Feature Todo" );
+TFEATURETODO( "Feature Todo" );
 
-TFEATTODON( 2, "Feature N Todo" );
+TFEATURETODON( 2, "Feature N Todo" );
