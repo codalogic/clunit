@@ -103,7 +103,9 @@ main-test.cpp:
 
 #include <iostream>
 #include <fstream>
-#include <strstream>
+#ifdef _MSC_VER
+    #include <strstream>
+#endif
 #include <sstream>
 #include <vector>
 #include <string>
@@ -313,8 +315,10 @@ private:
             // -ends.  So that these allocations do not muck up the heap checking stats,
             // -dummy uses of the libraries are made so that they are initialised.  We
             // -can then checkpoint the heap after this point.
-            std::ostrstream t1;
-            t1 << "" << 12;
+            #ifdef _MSC_VER
+                std::ostrstream t1;
+                t1 << "" << 12;
+            #endif
             std::ostringstream t2;
             t2 << "" << 12;
             tout() << "";
