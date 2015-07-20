@@ -21,4 +21,3 @@ $(OBJDIR)/clunit-test: $(OBJTESTFILES)
 
 $(OBJDIR)/%.o : %.cpp clunit.h
 	g++ -c $(CCFLAGS) $< -o $@
-
