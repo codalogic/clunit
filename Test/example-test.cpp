@@ -68,6 +68,12 @@ TFUNCTION( another_test_2 )
     TTEST( 1==1 );
 }
 
+TFUNCTION( toc_example )
+{
+    TTOC( "Table of Contents entry example" );  // Add table of contents entry
+    TTEST( 0==0 );
+}
+
 TFEATURETODO( "Feature Todo" );        // A quick way of recording a feature that needs testing
 
 TFEATURETODON( 2, "Feature N Todo" );  // As above but with a depth indicator

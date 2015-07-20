@@ -1,4 +1,4 @@
-Tests run on Mon Jul 20 13:20:46 2015
+Tests run on Mon Jul 20 15:00:55 2015
 
     Fixed size log tests [clunit-test.cpp:40]
     =========================================
@@ -73,6 +73,9 @@ Tests run on Mon Jul 20 13:20:46 2015
     ok: 1==1
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
+    ok: 0==0
+    ok: ! _CrtMemDifference( &s3, &s1, &s2 )
+
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
 
     ok: ! _CrtMemDifference( &s3, &s1, &s2 )
@@ -90,7 +93,7 @@ TODOs (12):
 - [2] Need todo this [example-test.cpp:44]
 - t == b (passing) [example-test.cpp:45]
 - [2] t == b (passing) [example-test.cpp:46]
-- Feature Todo [example-test.cpp:71]
-- [2] Feature N Todo [example-test.cpp:73]
+- Feature Todo [example-test.cpp:77]
+- [2] Feature N Todo [example-test.cpp:79]
 
-0 error(s), 12 todo(s), 38 test(s)
+0 error(s), 12 todo(s), 40 test(s)

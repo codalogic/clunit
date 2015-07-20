@@ -1,4 +1,4 @@
-Tests table of contents generated on Mon Jul 20 13:20:46 2015
+Tests table of contents generated on Mon Jul 20 15:00:55 2015
 
 # clunit-test.cpp
 | Description | Line |
@@ -17,3 +17,4 @@ Tests table of contents generated on Mon Jul 20 13:20:46 2015
 | Test another feature | 54 |
 | Another test | 61 |
 | Another test 2 | 67 |
+| Table of Contents entry example | 73 |
