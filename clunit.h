@@ -262,8 +262,8 @@ private:
                 ttoc() << "| Description | Line |\n";
                 ttoc() << "|-------------|------|\n";
                 p_current_test_file = file;
-                ttoc() << "| " << what << " | " << line << " |\n";
             }
+            ttoc() << "| " << what << " | " << line << " |\n";
         }
         void tdoc( const char * what )
         {
