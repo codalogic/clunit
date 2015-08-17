@@ -1,4 +1,4 @@
-Tests table of contents generated on Mon Jul 20 15:00:55 2015
+Tests table of contents generated on Mon Aug 17 13:59:30 2015
 
 # clunit-test.cpp
 | Description | Line |
