@@ -1,4 +1,0 @@
-clunit is a crude C++ Unit Test framework, primarily intended as an excuse to
-play with git and gthub.
-
-See clunit.h for a description of how to use the code.
