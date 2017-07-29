@@ -1,4 +1,4 @@
-Tests run on Mon Aug 17 13:59:30 2015
+Tests run on Sat Jul 29 10:53:23 2017
 
     Fixed size log tests [clunit-test.cpp:40]
     =========================================
@@ -21,7 +21,7 @@ Tests run on Mon Aug 17 13:59:30 2015
 
     Test tests [clunit-test.cpp:89]
     ===============================
-      Test description
+      #### Test description ####
       : int t=1
     ok: 1 != 0
     ok: 1 == 1
@@ -49,9 +49,9 @@ Tests run on Mon Aug 17 13:59:30 2015
 
     Example tests [example-test.cpp:38]
     ===================================
-      Test description
+      #### Test description ####
       : int t=1
-      More description
+      #### More description ####
     ok: 1 != 0
     ok: 1 != 0
     ok: 1 == 1
