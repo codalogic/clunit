@@ -209,14 +209,12 @@ private:
     class singleton
     {
     private:
-        bool is_first_tout;
         bool is_new_tout_section;
         bool is_new_print_all_section;
         int n_tests;
         int n_errors;
         int n_forced_fails_invoked;
         int n_forced_fails_occurred;
-        bool is_first_ttoc;
         const char * p_current_test_file;
         fixed_size_log todo_log;
 
@@ -227,14 +225,12 @@ private:
     public:
         singleton()
             :
-            is_first_tout( true ),
             is_new_tout_section( false ),
             is_new_print_all_section( false ),
             n_tests( 0 ),
             n_errors( 0 ),
             n_forced_fails_invoked( 0 ),
             n_forced_fails_occurred( 0 ),
-            is_first_ttoc( true ),
             p_current_test_file( 0 ),
             todo_log( 10000 )
         {}
@@ -508,12 +504,6 @@ public:
 #else
         static std::ofstream os( "clunit.out" );
 #endif
-        if( is_first_tout )
-        {
-            time_t t=time(NULL);
-            os << "Tests run on " << ctime(&t);
-            is_first_tout = false;
-        }
         if( is_new_tout_section )
         {
             is_new_tout_section = false;
@@ -524,12 +514,6 @@ public:
     std::ostream & clunit::singleton::ttocout()
     {
         static std::ofstream os( "clunit-toc.md" );
-        if( is_first_ttoc )
-        {
-            time_t t=time(NULL);
-            os << "Tests table of contents generated on " << ctime(&t);
-            is_first_ttoc = false;
-        }
         return os;
     }
 #endif
