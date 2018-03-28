@@ -1,4 +1,3 @@
-
     Fixed size log tests [clunit-test.cpp:40]
     =========================================
     ok: log.size() == 0

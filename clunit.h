@@ -209,6 +209,7 @@ private:
     class singleton
     {
     private:
+        bool is_first_section;
         bool is_new_tout_section;
         bool is_new_print_all_section;
         int n_tests;
@@ -226,6 +227,7 @@ private:
     public:
         singleton()
             :
+            is_first_section( true ),
             is_new_tout_section( false ),
             is_new_print_all_section( false ),
             n_tests( 0 ),
@@ -260,10 +262,12 @@ private:
         {
             if( ! p_current_test_file || strcmp( p_current_test_file, file ) != 0 )
             {
-                ttocout() << "\n";
-                ttocout() << "# " << file_base( file ) << "\n";
-                ttocout() << "| Description | Line |\n";
-                ttocout() << "|-------------|------|\n";
+                if( p_current_test_file )   // if( we've already output data )
+                    ttocout() << "\n";
+                ttocout() << "# " << file_base( file ) << "\n" <<   // # at start of line makes a heading in a .md file
+                             "\n" <<
+                             "| Description | Line |\n" <<
+                             "|-------------|------|\n";
                 p_current_test_file = file;
             }
             ttocout() << "| " << what << " | " << line << " |\n";
@@ -361,7 +365,9 @@ private:
 
                 try
                 {
-                    is_new_tout_section = is_new_print_all_section = true;
+                    if( ! is_first_section )
+                        is_new_tout_section = is_new_print_all_section = true;
+                    is_first_section = false;
                     if( job->p_description )
                         tbegin( job->p_description, job->p_file, job->line );
                     job->job();
@@ -393,12 +399,12 @@ private:
             {
                 std::ostringstream todo_report;
                 todo_report <<
-                        "\nTODOs (" <<
+                        "TODOs (" <<
                         todo_log.size() <<
                         "):\n------------------------\n" <<
                         todo_log.get() <<
                         "\n";
-                print_to_all_outputs( todo_report.str() );
+                print_to_all_outputs( std::string( "\n" ) + todo_report.str() );
                 ttodoout() << todo_report.str();
             }
             std::ostringstream summary;
