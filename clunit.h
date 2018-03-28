@@ -221,6 +221,7 @@ private:
         job_list & get_jobs();
         std::ostream & tout();
         std::ostream & ttocout();
+        std::ostream & ttodoout();
 
     public:
         singleton()
@@ -398,6 +399,7 @@ private:
                         todo_log.get() <<
                         "\n";
                 print_to_all_outputs( todo_report.str() );
+                ttodoout() << todo_report.str();
             }
             std::ostringstream summary;
             summary <<
@@ -514,6 +516,11 @@ public:
     std::ostream & clunit::singleton::ttocout()
     {
         static std::ofstream os( "clunit-toc.md" );
+        return os;
+    }
+    std::ostream & clunit::singleton::ttodoout()
+    {
+        static std::ofstream os( "clunit-todo.out" );
         return os;
     }
 #endif
